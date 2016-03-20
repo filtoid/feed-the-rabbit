@@ -34,6 +34,7 @@ while quit != True:
     ret = cur_screen.update(key_handler)
     if ret=='game':
         cur_screen = GAME
+        GAME.penalise_error = MENU.hardcore_mode
         GAME.start()
     elif ret =='menu':
         score = GAME.score

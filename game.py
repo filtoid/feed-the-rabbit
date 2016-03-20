@@ -21,6 +21,7 @@ class Game(object):
         self.timer = 0
         self.GAME_LENGTH = 60
         self.start_time = 0
+        self.penalise_error = True
 
     def start(self):
         self.timer = self.GAME_LENGTH
@@ -56,6 +57,19 @@ class Game(object):
         textpos.x += 350
         screen.blit(text, textpos)
 
+    def _feed_carrot(self, rabbit):
+        ret = rabbit.feed_carrot()
+        if ret == False and self.penalise_error:
+            # Penalise as we are in hardcore_mode
+            self.score -= 1
+        elif ret == True:
+            # If we are in hardcore_mode then score 2 otherwise 1
+            if self.penalise_error:
+                self.score += 2
+            else:
+                self.score += 1
+
+
     def update(self, key_handler):
         #Update rabbits
         # done_debug = False
@@ -66,24 +80,23 @@ class Game(object):
             rabbit.update(False)
 
         if key_handler.get_key_down('left'):
-            if self.rabbits[0].feed_carrot():
-                self.score += 1
+            self._feed_carrot(self.rabbits[0])
 
         if key_handler.get_key_down('up'):
-            if self.rabbits[1].feed_carrot():
-                self.score += 1
+            self._feed_carrot(self.rabbits[1])
 
         if key_handler.get_key_down('down'):
-            if self.rabbits[2].feed_carrot():
-                self.score += 1
+            self._feed_carrot(self.rabbits[2])
 
         if key_handler.get_key_down('right'):
-            if self.rabbits[3].feed_carrot():
-                self.score += 1
+            self._feed_carrot(self.rabbits[3])
 
         if key_handler.get_key_down('space'):
-            if self.rabbits[4].feed_carrot():
-                self.score += 1
+            self._feed_carrot(self.rabbits[4])
+
+        # Don't allow negative scores
+        if self.score < 0:
+            self.score = 0
 
         cur_time = datetime.datetime.now()
         diff = (cur_time-self.start_time).seconds

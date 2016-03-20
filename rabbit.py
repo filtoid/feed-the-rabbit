@@ -15,6 +15,7 @@ class Rabbit(object):
         self.wait = 0
         self.upper = upper
         self.lower = lower
+        self.penalty_timer = 10
 
     def draw(self, screen):
         screen.blit(self.img, self.rect)
@@ -30,6 +31,12 @@ class Rabbit(object):
             #     print(self.wait)
             self.wait -= 1
             return
+
+        # Don't just let the score go down in bounds for incorrect
+        if self.penalty_timer > 0:
+            self.penalty_timer -= 1
+            if self.penalty_timer < 1:
+                self.penalty_timer = 0
 
         if self.status == 'down' or self.status == 'carrot':
             self.rect.y += 2
@@ -51,11 +58,18 @@ class Rabbit(object):
 
     def feed_carrot(self):
         if self.status == 'carrot':
-            return False
+            return None
 
         diff = self.upper - self.lower
         if self.rect.y < (self.lower + (diff/4)):
             self.status='carrot'
             return True
 
-        return False
+        if self.rect.y > (self.upper - (diff/4)):
+            # Subtract from score because we are way off
+            if self.penalty_timer < 1:
+                self.penalty_timer = 10
+                return False
+            return None
+
+        return None

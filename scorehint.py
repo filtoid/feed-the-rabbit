@@ -1,6 +1,7 @@
 # An object which floats near the bunny we either lost a score from or gained
 # a score from. This helps to convey that we scored or were penalised
 import pygame
+import random
 
 class ScoreHint(object):
     def __init__(self, x, y, negative, value):
@@ -15,6 +16,8 @@ class ScoreHint(object):
         if self.counter < 0:
             return False
 
+        self.y -= 1
+        self.x += random.randint(-1,1)
         return True
 
     def draw(self, screen):

@@ -22,9 +22,9 @@ class Rabbit(object):
             return
 
         if self.status == 'down':
-            self.rect.y += 1
+            self.rect.y += 2
         elif self.status=='up':
-            self.rect.y -= 1
+            self.rect.y -= 2
 
         if(self.rect.y>self.upper):
             self.wait = random.randint(20, 90)

@@ -8,6 +8,7 @@ class Menu(object):
         self.high_score = 0
         self.hardcore_mode = False
         self.cooldown = 0
+        self.reset_timer = 0
 
     def draw(self, screen):
         font = pygame.font.Font(None, 36)
@@ -39,8 +40,14 @@ class Menu(object):
         textpos.centery = self.height - textpos.height
         screen.blit(text, textpos)
 
+    def reset(self):
+        self.reset_timer = 40
 
     def update(self, key_handler):
+        if self.reset_timer > 0:
+            self.reset_timer -= 1
+            return
+
         if self.cooldown > 0:
             self.cooldown -= 1
             #Just in case we somehow jump over the value

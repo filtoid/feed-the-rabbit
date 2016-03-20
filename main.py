@@ -41,6 +41,7 @@ while quit != True:
         if score > MENU.high_score:
             MENU.high_score = score
         cur_screen = MENU
+        MENU.reset()
 
     cur_screen.draw(screen)
 

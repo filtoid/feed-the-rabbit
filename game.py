@@ -27,6 +27,7 @@ class Game(object):
         self.penalise_error = True
 
     def start(self):
+        self.score = 0
         self.timer = self.GAME_LENGTH
         self.start_time = datetime.datetime.now()
 

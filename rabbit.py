@@ -1,7 +1,7 @@
 import pygame
 import random
 
-class Rabbit():
+class Rabbit(object):
     def __init__(self, x, y, upper, lower):
         self.img = pygame.image.load("rabbit1.png")
         self.img = pygame.transform.scale(self.img, (60, 60))

@@ -39,7 +39,7 @@ class Game(object):
         pygame.draw.rect(screen, green, (290,222,50,self.height-170))
         pygame.draw.rect(screen, green, (370,170,50,self.height-170))
 
-    def update(self):
+    def update(self, key_handler):
         #Update rabbits
         for rabbit in self.rabbits:
             rabbit.update()

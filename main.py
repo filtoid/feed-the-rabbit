@@ -34,6 +34,7 @@ while quit != True:
     ret = cur_screen.update(key_handler)
     if ret=='game':
         cur_screen = GAME
+        GAME.start()
     elif ret =='menu':
         cur_screen = MENU
 

@@ -1,5 +1,6 @@
 from rabbit import Rabbit
 import pygame
+import datetime
 
 black = (0,0,0)
 green = (0,255,0)
@@ -17,7 +18,12 @@ class Game(object):
         self.width = width
         self.height = height
         self.score = 0
+        self.timer = 0
+        self.start_time = 0
+
+    def start(self):
         self.timer = 60
+        self.start_time = datetime.datetime.now()
 
     def draw(self, screen):
         #Draw background
@@ -39,7 +45,20 @@ class Game(object):
         pygame.draw.rect(screen, green, (290,222,50,self.height-170))
         pygame.draw.rect(screen, green, (370,170,50,self.height-170))
 
+        font = pygame.font.Font(None, 36)
+        text = font.render("Time: {}".format(self.timer), 1, (255, 255, 0))
+        textpos = text.get_rect()
+        screen.blit(text, textpos)
+
     def update(self, key_handler):
         #Update rabbits
         for rabbit in self.rabbits:
             rabbit.update()
+
+        cur_time = datetime.datetime.now()
+        diff = (cur_time-self.start_time).seconds
+        self.timer = 60 - diff
+
+        if self.timer < 0:
+            return 'menu'
+        return None

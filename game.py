@@ -1,6 +1,8 @@
-from rabbit import Rabbit
 import pygame
 import datetime
+
+from rabbit import Rabbit
+from scorehint import ScoreHint
 
 black = (0,0,0)
 green = (0,255,0)
@@ -15,6 +17,7 @@ class Game(object):
             Rabbit(290,240,250,160),
             Rabbit(365,190,200,110)
         ]
+        self.score_objects = []
         self.width = width
         self.height = height
         self.score = 0
@@ -57,16 +60,23 @@ class Game(object):
         textpos.x += 350
         screen.blit(text, textpos)
 
-    def _feed_carrot(self, rabbit):
+        for so in self.score_objects:
+            so.draw(screen)
+
+    def _feed_carrot(self, index):
+        rabbit = self.rabbits[index]
         ret = rabbit.feed_carrot()
         if ret == False and self.penalise_error:
             # Penalise as we are in hardcore_mode
             self.score -= 1
+            self.score_objects.append(ScoreHint(rabbit.rect.x, rabbit.rect.y, True, -1))
         elif ret == True:
             # If we are in hardcore_mode then score 2 otherwise 1
             if self.penalise_error:
+                self.score_objects.append(ScoreHint(rabbit.rect.x, rabbit.rect.y, False, 2))
                 self.score += 2
             else:
+                self.score_objects.append(ScoreHint(rabbit.rect.x, rabbit.rect.y, False, 1))
                 self.score += 1
 
     def update(self, key_handler):
@@ -79,19 +89,19 @@ class Game(object):
             rabbit.update(False)
 
         if key_handler.get_key_down('left'):
-            self._feed_carrot(self.rabbits[0])
+            self._feed_carrot(0)
 
         if key_handler.get_key_down('up'):
-            self._feed_carrot(self.rabbits[1])
+            self._feed_carrot(1)
 
         if key_handler.get_key_down('down'):
-            self._feed_carrot(self.rabbits[2])
+            self._feed_carrot(2)
 
         if key_handler.get_key_down('right'):
-            self._feed_carrot(self.rabbits[3])
+            self._feed_carrot(3)
 
         if key_handler.get_key_down('space'):
-            self._feed_carrot(self.rabbits[4])
+            self._feed_carrot(4)
 
         # Don't allow negative scores
         if self.score < 0:
@@ -100,6 +110,12 @@ class Game(object):
         cur_time = datetime.datetime.now()
         diff = (cur_time-self.start_time).seconds
         self.timer = self.GAME_LENGTH - diff
+
+        # Loop through and update the score_objects
+        for k,v in enumerate(self.score_objects):
+            if v.update()==False:
+                v = None
+                self.score_objects = self.score_objects[:k] + self.score_objects[k+1:]
 
         if self.timer < 0:
             return 'menu'

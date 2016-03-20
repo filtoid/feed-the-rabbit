@@ -69,7 +69,6 @@ class Game(object):
             else:
                 self.score += 1
 
-
     def update(self, key_handler):
         #Update rabbits
         # done_debug = False

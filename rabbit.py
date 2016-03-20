@@ -26,8 +26,8 @@ class Rabbit(object):
 
     def update(self, debug):
         if self.wait > 0:
-            if debug == True:
-                print(self.wait)
+            # if debug == True:
+            #     print(self.wait)
             self.wait -= 1
             return
 
@@ -39,8 +39,8 @@ class Rabbit(object):
             print("ERROR: Unknown status ({})".format(self.status))
 
         if(self.rect.y > self.upper):
-            if debug == True:
-                print("Now here {} {} {}".format(self.status, self.rect.y, self.upper))
+            # if debug == True:
+            #     print("Now here {} {} {}".format(self.status, self.rect.y, self.upper))
             self.rect.y = self.upper
             self.wait = random.randint(20, 70)
             self.status = 'up'

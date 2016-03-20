@@ -58,7 +58,7 @@ class Game(object):
 
     def update(self, key_handler):
         #Update rabbits
-        done_debug = False
+        # done_debug = False
         for rabbit in self.rabbits:
             # if done_debug==False:
             #     done_debug = True

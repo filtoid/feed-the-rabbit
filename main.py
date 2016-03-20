@@ -6,7 +6,13 @@ size = (width,height) = (480,320)
 pygame.init()
 screen = pygame.display.set_mode(size)
 
-rabbits = [Rabbit(45,110), Rabbit(205,110), Rabbit(365,110)]
+rabbits = [
+        Rabbit(45,190,200,110),
+        Rabbit(130,240,250,160),
+        Rabbit(205,190,200,110),
+        Rabbit(290,240,250,160),
+        Rabbit(365,190,200,110)
+    ]
 
 black = (0,0,0)
 green = (0,255,0)
@@ -38,9 +44,9 @@ while quit != True:
 
     #Panels to hide the rabbits underground
     pygame.draw.rect(screen, green, (50,170,50,height-170))
-
+    pygame.draw.rect(screen, green, (130,222,50,height-170))
     pygame.draw.rect(screen, green, (210,170,50,height-170))
-
+    pygame.draw.rect(screen, green, (290,222,50,height-170))
     pygame.draw.rect(screen, green, (370,170,50,height-170))
 
     pygame.display.flip()

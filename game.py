@@ -19,10 +19,11 @@ class Game(object):
         self.height = height
         self.score = 0
         self.timer = 0
+        self.GAME_LENGTH = 60
         self.start_time = 0
 
     def start(self):
-        self.timer = 60
+        self.timer = self.GAME_LENGTH
         self.start_time = datetime.datetime.now()
 
     def draw(self, screen):
@@ -50,14 +51,43 @@ class Game(object):
         textpos = text.get_rect()
         screen.blit(text, textpos)
 
+        text = font.render("Score: {}".format(self.score), 1, (255, 255, 0))
+        textpos = text.get_rect()
+        textpos.x += 350
+        screen.blit(text, textpos)
+
     def update(self, key_handler):
         #Update rabbits
+        done_debug = False
         for rabbit in self.rabbits:
-            rabbit.update()
+            # if done_debug==False:
+            #     done_debug = True
+            #     rabbit.update(True)
+            rabbit.update(False)
+
+        if key_handler.get_key_down('left'):
+            if self.rabbits[0].feed_carrot():
+                self.score += 1
+
+        if key_handler.get_key_down('up'):
+            if self.rabbits[1].feed_carrot():
+                self.score += 1
+
+        if key_handler.get_key_down('down'):
+            if self.rabbits[2].feed_carrot():
+                self.score += 1
+
+        if key_handler.get_key_down('right'):
+            if self.rabbits[3].feed_carrot():
+                self.score += 1
+
+        if key_handler.get_key_down('space'):
+            if self.rabbits[4].feed_carrot():
+                self.score += 1
 
         cur_time = datetime.datetime.now()
         diff = (cur_time-self.start_time).seconds
-        self.timer = 60 - diff
+        self.timer = self.GAME_LENGTH - diff
 
         if self.timer < 0:
             return 'menu'

@@ -36,6 +36,9 @@ while quit != True:
         cur_screen = GAME
         GAME.start()
     elif ret =='menu':
+        score = GAME.score
+        if score > MENU.high_score:
+            MENU.high_score = score
         cur_screen = MENU
 
     cur_screen.draw(screen)

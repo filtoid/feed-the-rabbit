@@ -10,16 +10,21 @@ red = (255,0,0)
 
 class Game(object):
     def __init__(self,width,height):
-        self.rabbits = [
-            Rabbit(45,190,200,110),
-            Rabbit(130,240,250,160),
-            Rabbit(205,190,200,110),
-            Rabbit(290,240,250,160),
-            Rabbit(365,190,200,110)
-        ]
-        self.score_objects = []
         self.width = width
         self.height = height
+        unit_w = self.width/10
+        unit_h = self.height/10
+        offset = self.width/16
+
+        self.rabbits = [
+            Rabbit(unit_w-offset,unit_h*6,unit_h*6,unit_h*4.5,width,height),
+            Rabbit((unit_w*2.8)-offset,unit_h*7,unit_h*7,unit_h*5.5,width,height),
+            Rabbit((unit_w*5)-offset,unit_h*6,unit_h*6,unit_h*4.5,width,height),
+            Rabbit((unit_w*6.8)-offset,unit_h*7,unit_h*7,unit_h*5.5,width,height),
+            Rabbit((unit_w*8.5)-offset,unit_h*6,unit_h*6,unit_h*4.5,width,height)
+        ]
+        self.score_objects = []
+
         self.score = 0
         self.timer = 0
         self.GAME_LENGTH = 60
@@ -32,24 +37,28 @@ class Game(object):
         self.start_time = datetime.datetime.now()
 
     def draw(self, screen):
+        unit_w = self.width/10
+        unit_h = self.height/10
+        offset = self.width/20
+
         #Draw background
-        pygame.draw.rect(screen, green, (0,100,480,220))
-        pygame.draw.ellipse(screen, black, [50, 150, 50, 20])
-        pygame.draw.ellipse(screen, black, [130, 200, 65, 25])
-        pygame.draw.ellipse(screen, black, [210, 150, 50, 20])
-        pygame.draw.ellipse(screen, black, [290, 200, 65, 25])
-        pygame.draw.ellipse(screen, black, [370, 150, 50, 20])
+        pygame.draw.rect(screen, green, (0,unit_h*3,self.width,self.height))
+        pygame.draw.ellipse(screen, black, [unit_w-offset, unit_h*5.2, unit_w*1.5, self.height/16])
+        pygame.draw.ellipse(screen, black, [(unit_w*2.8)-offset, unit_h*6.2, unit_w*1.5, self.height/16])
+        pygame.draw.ellipse(screen, black, [(unit_w*5)-offset, unit_h*5.2, unit_w*1.5, self.height/16])
+        pygame.draw.ellipse(screen, black, [(unit_w*6.8)-offset, unit_h*6.2, unit_w*1.5, self.height/16])
+        pygame.draw.ellipse(screen, black, [(unit_w*8.5)-offset, unit_h*5.2, unit_w*1.5, self.height/16])
 
         # Draw rabbits
         for rabbit in self.rabbits:
             rabbit.draw(screen)
 
         #Panels to hide the rabbits underground
-        pygame.draw.rect(screen, green, (50,170,50,self.height-170))
-        pygame.draw.rect(screen, green, (130,222,50,self.height-170))
-        pygame.draw.rect(screen, green, (210,170,50,self.height-170))
-        pygame.draw.rect(screen, green, (290,222,50,self.height-170))
-        pygame.draw.rect(screen, green, (370,170,50,self.height-170))
+        pygame.draw.rect(screen, green, (unit_w-(offset*2), unit_h*5.8, (unit_w*1.5)+offset, self.height-unit_h*5.8))
+        pygame.draw.rect(screen, green, ((unit_w*2.8)-(offset*2), unit_h*6.8, (unit_w*1.5)+offset, self.height-unit_h*6.8))
+        pygame.draw.rect(screen, green, ((unit_w*5)-(offset*2), unit_h*5.8, (unit_w*1.5)+offset, self.height-unit_h*5.8))
+        pygame.draw.rect(screen, green, ((unit_w*6.8)-(offset*2), unit_h*6.8, (unit_w*1.5)+offset, self.height-unit_h*6.8))
+        pygame.draw.rect(screen, green, ((unit_w*8.5)-(offset*1.4), unit_h*5.8, (unit_w*1.5)+offset, self.height-unit_h*5.8))
 
         font = pygame.font.Font(None, 36)
         text = font.render("Time: {}".format(self.timer), 1, (255, 255, 0))

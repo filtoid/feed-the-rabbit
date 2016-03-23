@@ -4,15 +4,17 @@ from game import Game
 from menu import Menu
 from keyhandler import KeyHandler
 
-size = (width,height) = (480,320)
+SCREEN_WIDTH = 480 * 2
+SCREEN_HEIGHT = 320 * 2
+size = (SCREEN_WIDTH,SCREEN_HEIGHT)
 
 pygame.init()
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption('Feed The Rabbit')
 
 key_handler = KeyHandler()
-MENU = Menu(width,height)
-GAME = Game(width,height)
+MENU = Menu(SCREEN_WIDTH,SCREEN_HEIGHT)
+GAME = Game(SCREEN_WIDTH,SCREEN_HEIGHT)
 
 cur_screen = MENU
 

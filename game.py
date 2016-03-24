@@ -127,6 +127,7 @@ class Game(object):
                 v = None
                 self.score_objects = self.score_objects[:k] + self.score_objects[k+1:]
 
-        if self.timer < 0:
+        if self.timer < 0 or key_handler.get_key_down('esc'):
             return 'menu'
+            
         return None

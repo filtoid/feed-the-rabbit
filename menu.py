@@ -1,4 +1,5 @@
 from game import Game
+import sys
 import pygame
 
 class Menu(object):
@@ -61,5 +62,9 @@ class Menu(object):
         if key_handler.get_key_down('space') and self.cooldown==0:
             self.cooldown = 10
             self.hardcore_mode = not self.hardcore_mode
+
+        if key_handler.get_key_down('q'):
+            pygame.quit()
+            sys.exit()
 
         return None

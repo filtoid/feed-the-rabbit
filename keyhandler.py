@@ -7,13 +7,17 @@ class KeyHandler(object):
             'up': False,
             'down': False,
             'left': False,
-            'right': False
+            'right': False,
+            'q': False,
+            'esc': False
         }
         self.handled = {
             'up': False,
             'down': False,
             'left': False,
-            'right': False
+            'right': False,
+            'q': False,
+            'esc': False
         }
 
     def handle_keys(self, pressed):
@@ -47,6 +51,17 @@ class KeyHandler(object):
             self.keys['space'] = False
             self.handled['space'] = False
 
+        if pressed[pygame.K_q]:
+            self.keys['q'] = True
+        else:
+            self.handled['q'] = False
+            self.handled['q'] = False
+
+        if pressed[pygame.K_ESCAPE]:
+            self.keys['esc'] = True
+        else:
+            self.handled['esc'] = False
+            self.handled['esc'] = False
 
     def get_key_down(self, key):
         #Let us know if key is down and unhandled
@@ -60,5 +75,10 @@ class KeyHandler(object):
             return True
         if key=='space' and self.keys['space'] == True and self.handled['space'] == False:
             return True
+        if key=='q' and self.keys['q'] == True and self.handled['q'] == False:
+            return True
+        if key=='esc' and self.keys['esc'] == True and self.handled['esc'] == False:
+            return True
+
 
         return False

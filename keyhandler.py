@@ -54,13 +54,13 @@ class KeyHandler(object):
         if pressed[pygame.K_q]:
             self.keys['q'] = True
         else:
-            self.handled['q'] = False
+            self.keys['q'] = False
             self.handled['q'] = False
 
         if pressed[pygame.K_ESCAPE]:
             self.keys['esc'] = True
         else:
-            self.handled['esc'] = False
+            self.keys['esc'] = False
             self.handled['esc'] = False
 
     def get_key_down(self, key):

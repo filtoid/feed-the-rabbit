@@ -7,14 +7,14 @@ class Rabbit(object):
         width = math.floor(screen_width/6)
         height = math.floor(screen_height/6)
         self.img = pygame.image.load("rabbit1.png")
-        self.img = pygame.transform.scale(self.img, (width, height))
+        self.img = pygame.transform.scale(self.img, (int(width), int(height)))
 
         carrot_width = math.floor(screen_width/14)
         carrot_height = math.floor(screen_height/14)
         self.carrot_offset_y = math.floor(screen_height/16)
         self.carrot_offset_x = math.floor(screen_width/96)
         self.carrot = pygame.image.load("carrot_small.png")
-        self.carrot = pygame.transform.scale(self.carrot, (carrot_width,carrot_height))
+        self.carrot = pygame.transform.scale(self.carrot, (int(carrot_width),int(carrot_height)))
 
         self.rect = self.img.get_rect()
         self.rect.x = x
